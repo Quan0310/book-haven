@@ -1,0 +1,14 @@
+.Sidebar-container{
+    width: 200px;
+}
+@media (max-width: 900px) {
+    .Sidebar-container {
+        display: none;
+    }
+}
+.sidebar{
+    background-color: #fff;
+    margin-right: 10px;
+    border-radius: 5px;
+    /* font-family: Regular; */
+}

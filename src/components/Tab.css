@@ -1,0 +1,17 @@
+.prodName{
+    color: black;
+    font-size: 0.88em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.discount{
+    color: #fff;
+    background-color: #6868AC;
+    height: 20px;
+    width: 41px;
+    font-size: 0.75em;
+    text-align: center;
+    
+}
