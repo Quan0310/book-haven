@@ -1,8 +1,8 @@
 import React from 'react';
-import Login from './AuthPage/Login';
-import Register from './AuthPage/register';
+import Login from '../Auth/AuthPage/Login';
+import Register from '../Auth/AuthPage/register';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
-import PrimarySearchAppBar from './Header';
+import PrimarySearchAppBar from '../Header/Header';
 const Auth = () => {
     return (
         <>

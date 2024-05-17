@@ -1,0 +1,8 @@
+.pseudoSidebar{
+    width: 200px;
+}
+@media (max-width: 900px) {
+    .pseudoSidebar {
+        display: none;
+    }
+}

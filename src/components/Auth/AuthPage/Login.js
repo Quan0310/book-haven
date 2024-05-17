@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { isAdmin, loginApi } from '../../services/UserServices';
+import { isAdmin, loginApi } from '../../../services/UserServices';
 import { TwoK } from '@mui/icons-material';
 const linkStyle = {
     cursor: 'pointer', color: '#6868AC', textDecoration: 'none',

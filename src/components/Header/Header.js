@@ -12,10 +12,11 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import './Header.css'
 import Button from '@mui/material/Button';
 import axios from 'axios';
@@ -86,6 +87,10 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
     const navigate = useNavigate();
+    const handleProfile = () => {
+        handleMenuClose();
+        navigate('/user/profile');
+    }
     const handleLogOut = async () => {
         try {
             const response = await axios.post('http://localhost:8765/api/auth/signout', {}, { withCredentials: true });
@@ -113,9 +118,9 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-            <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+            <MenuItem onClick={handleProfile}>Tài khoản của tôi</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Đơn mua</MenuItem>
+            <MenuItem onClick={handleLogOut}>Đăng xuất</MenuItem>
         </Menu>
     );
 
@@ -139,7 +144,7 @@ export default function PrimarySearchAppBar() {
             <MenuItem>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="error">
-                        <MailIcon />
+                        <NotificationsActiveOutlinedIcon />
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
@@ -151,7 +156,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                 >
                     <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
+                        <ShoppingCartOutlinedIcon />
                     </Badge>
                 </IconButton>
                 <p>Notifications</p>
@@ -164,28 +169,16 @@ export default function PrimarySearchAppBar() {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle />
+                    <AccountCircleOutlinedIcon />
                 </IconButton>
                 <p>Profile</p>
-            </MenuItem>
-            <MenuItem onClick={handleLogOut}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Log out</p>
             </MenuItem>
         </Menu>
     );
 
     return (
 
-        <Box sx={{ flexGrow: 1 }} >
+        <Box sx={{ flexGrow: 1, position: 'fixed', width: '100%', top: 0, zIndex: 1000 }} >
             <AppBar position="static" sx={{ backgroundColor: 'white', color: 'black' }}>
 
                 <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
@@ -199,11 +192,11 @@ export default function PrimarySearchAppBar() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography
+                        <Typography button onClick={() => { navigate('/user') }}
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ display: { xs: 'none', sm: 'block' } }}
+                            sx={{ display: { xs: 'none', sm: 'block' }, cursor: 'pointer' }}
                         >
                             BookHaven
                         </Typography>
@@ -227,7 +220,7 @@ export default function PrimarySearchAppBar() {
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                                 <Badge badgeContent={4} color="error">
-                                    <MailIcon />
+                                    <NotificationsActiveOutlinedIcon />
                                 </Badge>
                             </IconButton>
                             <IconButton
@@ -236,7 +229,7 @@ export default function PrimarySearchAppBar() {
                                 color="inherit"
                             >
                                 <Badge badgeContent={17} color="error">
-                                    <NotificationsIcon />
+                                    <ShoppingCartOutlinedIcon />
                                 </Badge>
                             </IconButton>
                             <IconButton
@@ -248,7 +241,7 @@ export default function PrimarySearchAppBar() {
                                 onClick={handleProfileMenuOpen}
                                 color="inherit"
                             >
-                                <AccountCircle />
+                                <AccountCircleOutlinedIcon />
                             </IconButton>
 
                         </Box>
