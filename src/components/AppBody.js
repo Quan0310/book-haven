@@ -3,15 +3,9 @@ import './Appbody.css';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import ResponsiveDrawer from './sidebar/SideBarHome';
-import SideBar from './sidebar/SideBarHome';
-import AppContentHome from './AppContentHome/AppContentHome';
 import PrimarySearchAppBar from './Header/Header';
-import SideBarHome from './sidebar/SideBarHome';
-import Home from './home/Home';
-import Profile from './profile/Profile';
-import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
+import { Flare } from '@mui/icons-material';
 
 
 const AppBody = () => {
@@ -24,7 +18,7 @@ const AppBody = () => {
             <PrimarySearchAppBar></PrimarySearchAppBar>
             <div style={{ backgroundColor: '#D9D9D9', height: '4000px' }}>
                 <div className='body-container'>
-                    <div style={{ height: '30px', position: 'fixed', top: 64, zIndex: 999, width: '100%', backgroundColor: '#D9D9D9' }}>
+                    <div style={{ height: '40px', position: 'fixed', top: 64, zIndex: 999, width: '100%', backgroundColor: '#D9D9D9', alignItems: 'center', display: 'flex' }}>
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link color="inherit" href="/" onClick={handleClick}>
                                 Trang chủ

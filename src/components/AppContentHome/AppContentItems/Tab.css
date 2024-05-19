@@ -6,12 +6,26 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.item-container {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* overflow: hidden; */
+}
+.item-container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.item-container:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 .discount{
     color: #fff;
     background-color: #6868AC;
     height: 20px;
     width: 41px;
-    font-size: 0.75em;
-    text-align: center;
-    
+    font-size: 12px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

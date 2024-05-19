@@ -86,6 +86,9 @@ export default function PrimarySearchAppBar() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+    const handleCart = () => {
+        navigate('/user/cart');
+    }
     const navigate = useNavigate();
     const handleProfile = () => {
         handleMenuClose();
@@ -149,7 +152,7 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            <MenuItem>
+            <MenuItem >
                 <IconButton
                     size="large"
                     aria-label="show 18 new notifications"
@@ -227,6 +230,7 @@ export default function PrimarySearchAppBar() {
                                 size="large"
                                 aria-label="show 17 new notifications"
                                 color="inherit"
+                                onClick={handleCart}
                             >
                                 <Badge badgeContent={17} color="error">
                                     <ShoppingCartOutlinedIcon />
