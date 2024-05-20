@@ -12,7 +12,7 @@ const CollapsibleList = ({ title, items, checkedItems, handleToggle, additionalI
 
     return (
         <>
-            <ListItem sx={{ paddingTop: '15px', paddingBottom: '5px' }}>
+            <ListItem button sx={{ paddingTop: '15px', paddingBottom: '5px' }}>
                 <ListItemText sx={{ '& span': { fontSize: '16px', fontWeight: '500' } }} primary={title} />
             </ListItem>
             {items.map((item, index) => (

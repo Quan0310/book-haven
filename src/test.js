@@ -1,71 +1,103 @@
-import React, { useState } from 'react';
-import { Box, Paper, TextField, Button, Typography } from '@mui/material';
-
-function VerificationCodeInput() {
-    const [values, setValues] = useState(Array(6).fill(''));
-    const inputRefs = Array(6)
-        .fill()
-        .map((_, i) => React.createRef());
-
-    const handleChange = (index, event) => {
-        let { value } = event.target;
-        // Loại bỏ các ký tự không phải số
-        value = value.replace(/\D/g, '');
-        const newValues = [...values];
-        newValues[index] = value;
-        setValues(newValues);
-
-        // Chuyển đến ô tiếp theo nếu có giá trị và không phải là ô cuối cùng
-        if (value && index < inputRefs.length - 1) {
-            inputRefs[index + 1].current.focus();
-        }
-    };
-
-    const handleKeyDown = (index, event) => {
-        // Chuyển đến ô trước đó khi nhấn Backspace và ô hiện tại không có giá trị
-        if (event.key === 'Backspace' && !event.target.value && index > 0) {
-            inputRefs[index - 1].current.focus();
-        }
-    };
-
+import React from 'react';
+import './Cart.css'
+import { Button, Checkbox, Grid } from '@mui/material';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+const Cart = () => {
     return (
-        <Box sx={{ height: '100vh', backgroundColor: '#6868AC', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Paper sx={{ padding: 4, width: '40%', textAlign: 'center' }}>
-                <Typography variant="h5" gutterBottom>
-                    Nhập mã xác nhận
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                    {values.map((value, index) => (
-                        <TextField
-                            key={index}
-                            variant="standard"
-                            inputRef={inputRefs[index]}
-                            value={value}
-                            inputProps={{
-                                maxLength: 1,
-                                style: {
-                                    textAlign: 'center',
-                                    fontSize: '24px',
+        <div style={{ paddingTop: '104px', textAlign: 'left', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+            <h3 className='cart-header'>Giỏ hàng</h3>
 
-                                },
-                                inputMode: 'numeric',
-                                pattern: '[0-9]*',
-                            }}
-                            sx={{
-                                width: '40px',
-                                borderBottom: value ? '1px solid #6868AC' : 'none'
-                            }}
-                            onChange={(event) => handleChange(index, event)}
-                            onKeyDown={(event) => handleKeyDown(index, event)}
-                        />
-                    ))}
-                </Box>
-                <Button variant="contained" sx={{ backgroundColor: '#6868AC', color: 'white', mt: 2 }}>
-                    Xác nhận
-                </Button>
-            </Paper>
-        </Box>
+            <div className='cart-body'>
+                <Grid container>
+                    <Grid xs={12} sm={9} >
+
+                        <Grid container className='cart-product-row-header'>
+
+                            <Grid xs={16 / 3} container sx={{ alignItems: 'center' }}  >
+                                <Checkbox sx={{
+                                    color: '#6868AC',
+                                    '&.Mui-checked': {
+                                        color: '#6868AC',
+                                    },
+                                }}
+                                    // checked={checkedItems.indexOf(item) !== -1}
+                                    color="primary"
+                                />
+                                <div className='all-product'>Tất cả sản phẩm (4 sản phẩm) </div>
+                            </Grid>
+                            <Grid display={{ xs: "none", sm: "none", md: 'block' }} md={4 / 3}> <div className='price'>Đơn giá</div></Grid>
+                            <Grid display={{ xs: "none", sm: "none", md: 'block' }} md={8 / 3}> <div className='quantity'>Số lượng</div></Grid>
+                            <Grid display={{ xs: "none", sm: "none", md: 'block' }} md={4 / 3}> <div className='total'>Thành tiền</div></Grid>
+                            <Grid display={{ xs: "none", sm: "none", md: 'block' }} md={4 / 3}> <div className='delete'><DeleteOutlineOutlinedIcon sx={{ color: '#686868' }} /></div></Grid>
+                        </Grid>
+
+                        <Grid className='cart-shop'>
+                            <Grid container className='cart-shop-name' >
+                                <Checkbox sx={{
+                                    color: '#6868AC',
+                                    '&.Mui-checked': {
+                                        color: '#6868AC',
+                                    },
+                                }}
+                                    // checked={checkedItems.indexOf(item) !== -1}
+                                    color="primary"
+                                />
+                                <div className='store-icon'> <StorefrontOutlinedIcon ></StorefrontOutlinedIcon></div>
+                                <h5>Ahabook</h5>
+
+                            </Grid>
+                            <Grid container className='cart-product-row-header'>
+                                <Grid xs={12} md={16 / 3} container sx={{ alignItems: 'center' }}>
+
+                                    <div className='all-producst'>
+                                        <Checkbox sx={{
+                                            color: '#6868AC',
+                                            '&.Mui-checked': {
+                                                color: '#6868AC',
+                                            },
+                                        }}
+                                            // checked={checkedItems.indexOf(item) !== -1}
+                                            color="primary"
+                                        />
+                                        <img src={'https://via.placeholder.com/300'} alt={'a'} style={{ width: '100px', height: 'auto', aspectRatio: '1/1', objectFit: 'contain', margin: '0 10px 0 5px' }} />
+                                        <div>
+                                            <p className='product-cart-name'>Combo 2Q: Cuốn theo chiều gió 2T-Bìa mềm</p>
+                                            <span className='product-cart-now'>NOW</span>
+                                            <span className='product-cart-2h'>Giao trong 2h</span>
+                                        </div>
+                                    </div>
+                                </Grid>
+                                <Grid display={{ xs: "none", sm: "none", md: 'block' }} md={4 / 3}> <div className='price'>Đơn giá</div></Grid>
+                                <Grid display={{ xs: "none", sm: "none", md: 'block' }} md={8 / 3}> <div className='quantity'>Số lượng</div></Grid>
+                                <Grid display={{ xs: "none", sm: "none", md: 'block' }} md={4 / 3}> <div className='total'>Thành tiền</div></Grid>
+                                <Grid display={{ xs: "none", sm: "none", md: 'block' }} md={4 / 3}> <div className='delete'><DeleteOutlineOutlinedIcon sx={{ color: '#686868' }} /></div></Grid>
+                                <Grid display={{ xs: "block", sm: "block", md: 'none' }} sm={12} sx={{ marginLeft: '47px', marginTop: "20px" }}>
+                                    <div className="detail-item">
+                                        <span className="detail-title">50.000đ</span>
+                                        <span className="detail-value">5</span>
+                                    </div>
+                                    <div className="detail-item">
+                                        <span className="detail-title">Số lượng:</span>
+                                        <span className="detail-value" style={{ color: '#6868AC', fontWeight: '500' }}>50.000đ</span>
+                                    </div>
+                                    <div className="detail-item">
+                                        <span className="detail-title">Thành tiền:</span>
+                                        <span className="detail-value" style={{ color: '#6868AC', fontWeight: '500' }}>50.000đ</span>
+                                    </div>
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid xs={12} sm={3}>
+                        <div className='cart-delivery-info'>
+                            b
+                        </div>
+                    </Grid>
+                </Grid>
+            </div>
+        </div >
     );
 }
-
-export default VerificationCodeInput;
+export default Cart;
