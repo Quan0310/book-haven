@@ -1,0 +1,61 @@
+.reviews {
+    margin: 20px;
+}
+
+.review {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.avatar {
+    flex-shrink: 0;
+    margin-top: 13px;
+}
+
+.avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.review-content {
+    margin-left: 10px;
+}
+
+.review h3 {
+    margin: 0 0 5px 0;
+}
+
+.review h5 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 5px 0;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.review p {
+    margin: 10px 0;
+}
+.review p.review-name{
+    margin-bottom: 0px;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-weight: 600;
+font-size: 14px;
+}
+.thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+    margin: 5px 10px 5px 0;
+}
+
+.thumbnail:hover {
+    border-color: #6868AC;
+}
