@@ -16,6 +16,7 @@ const AppBody = () => {
     return (
         <>
             <PrimarySearchAppBar></PrimarySearchAppBar>
+            <div style={{ height: '104px', backgroundColor: '#D9D9D9' }}></div>
             <div style={{ backgroundColor: '#D9D9D9', height: '4000px' }}>
                 <div className='body-container'>
                     <div style={{ height: '40px', position: 'fixed', top: 64, zIndex: 999, width: '100%', backgroundColor: '#D9D9D9', alignItems: 'center', display: 'flex' }}>

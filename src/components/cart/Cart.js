@@ -7,9 +7,14 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LocalAtmOutlinedIcon from '@mui/icons-material/LocalAtmOutlined';
+import { useNavigate } from 'react-router-dom';
 const Cart = () => {
+    const navigate = useNavigate();
+    const handleBuy = () => {
+        navigate("/user/checkout");
+    }
     return (
-        <div style={{ paddingTop: '104px', textAlign: 'left', fontFamily: 'Arial, Helvetica, sans-serif' }}>
+        <div style={{ textAlign: 'left', fontFamily: 'Arial, Helvetica, sans-serif' }}>
             <h3 className='cart-header'>Giỏ hàng</h3>
 
             <div className='cart-body'>
@@ -200,7 +205,7 @@ const Cart = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Button sx={{
+                            <Button onClick={handleBuy} sx={{
                                 width: '100%', backgroundColor: '#6868ac', color: '#fff',
                                 '&:hover': {
                                     backgroundColor: '#4d4db3', // Màu nền khi hover

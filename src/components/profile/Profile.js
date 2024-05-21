@@ -6,7 +6,7 @@ import ProfileContent from './ProfileContent/ProfileContent';
 
 const Profile = () => {
     return (
-        <div style={{ display: 'flex', paddingTop: '94px' }} >
+        <div style={{ display: 'flex' }} >
             <SideBarProfile></SideBarProfile>
             <div className='pseudoSidebar'></div>
             <ProfileContent />

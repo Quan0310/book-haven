@@ -1,5 +1,5 @@
 .cart-header{
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
 .cart-product-row-header{
     background-color: #fff;
@@ -37,7 +37,7 @@
     font-weight: bold;
     color: black;
 }
-.all-product .product-cart-now{
+ .product-cart-now{
     color: #6868ac;
     font-weight: 800;
     margin-right: 10px;
@@ -191,4 +191,95 @@
 }
 .checkout-button .MuiButon-root:hover {
     background-color: #E3CDFF
+}
+
+.cart-shipment{
+    background-color: #fff;
+    margin-right: 10px;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+.cart-shipment h5{
+    font-weight: 600;
+}
+.choose-shipment{
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.ship-10k{
+    color: #6868ac;
+    margin: 0 15px;
+}
+.chosen-shipment{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.ship-cost-original{
+    color: #686868;
+    text-decoration: line-through;
+    margin-right: 10px;
+}
+.shipment-product{
+    display: flex;
+}
+.shipment-product-info{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 15px;
+}
+.shipment-product-name{
+    margin: 0;
+    display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+}
+.shipment-flex{
+    display: flex;
+    justify-content: space-between;
+}
+.shipment-product-quantity{
+    color: #686868;
+}
+.shipment-product-price{
+    font-weight: 600;
+}
+.flex-spacebetween{
+    display: flex;
+    justify-content: space-between;
+}
+.checkout-total-value{
+    text-align: right;
+    width: 70%;
+}
+.checkout-total-value-note{
+    color: #686868;
+    font-size: 12px !important;
+}
+.checkout-total{
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    margin-bottom: 15px;
+}
+.checkout-title{
+    color: #686868;
+}
+.total-checkout-header{
+    margin-bottom: 20px;
+}
+.total-checkout-header-value{
+    color: #686868;
+        font-size: 12px !important;
+}
+.checkout-total-value-value{
+    color: #6868ac;
+        font-size: 18px !important;
 }

@@ -30,6 +30,7 @@ import Notification from "./components/profile/ProfileContent/ProfileContentItem
 import ChangePassword from "./components/profile/ProfileContent/ProfileContentItems/ChangePassword";
 import ProductDetail from "./components/detail/ProductDetail";
 import Cart from "./components/cart/Cart";
+import CheckOut from "./components/checkout/CheckOut";
 
 function App(props) {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function App(props) {
           <Route exact path="" element={<Home />} />
           <Route exact path="detail" element={<ProductDetail />} />
           <Route exact path="cart" element={<Cart />} />
-
+          <Route exact path="checkout" element={<CheckOut />} />
           <Route path="profile" element={<Profile />} >
             <Route exact path="" element={<MyAccount />} />
             <Route path="ordermanage" element={<OrderManage />} />

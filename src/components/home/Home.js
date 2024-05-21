@@ -7,7 +7,7 @@ import './Home.css';
 
 const Home = () => {
     return (
-        <div style={{ display: 'flex', paddingTop: '94px' }} >
+        <div style={{ display: 'flex' }} >
             <SideBarHome></SideBarHome>
             <div className='pseudoSidebar'></div>
             <AppContentHome></AppContentHome>
