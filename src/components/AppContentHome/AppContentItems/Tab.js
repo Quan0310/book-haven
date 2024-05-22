@@ -104,7 +104,7 @@ const TabContent = (props) => {
             .catch(error => {
                 console.log(error);
             });
-    })
+    }, [])
     const image = 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg';
     const name = 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs';
     const price = '1000.000đ';

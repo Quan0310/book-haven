@@ -26,7 +26,7 @@ const ProductDetail = (props) => {
             .catch(error => {
                 console.log(error);
             });
-    })
+    }, [])
     const images = [
         {
             original: product.image,
