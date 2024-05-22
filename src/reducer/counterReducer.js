@@ -1,9 +1,10 @@
-import { INCREMENT, DECREMENT } from '../action/types';
+import { INCREMENT, DECREMENT, PRODUCTID } from '../action/types';
 
 
 const INITIAL_STATE = {
 
     count: 0,
+    productId: 0,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -25,6 +26,10 @@ const reducer = (state = INITIAL_STATE, action) => {
 
             };
 
+        case PRODUCTID:
+            return {
+                ...state, productId: action.payload,
+            };
         default: return state;
 
     }

@@ -59,4 +59,8 @@ const books = (token, pageNumber, pageSize) => {
         }
     });
 }
-export { fetchAllUser, postCreateUser, getUserById, updateUserById, deleteUser, loginApi, isAdmin, isUser, books };
+const bookById = (id) => {
+    return axios.get(`/api/books/${id}`);
+}
+
+export { fetchAllUser, postCreateUser, getUserById, updateUserById, deleteUser, loginApi, isAdmin, isUser, books, bookById };

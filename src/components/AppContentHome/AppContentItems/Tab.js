@@ -1,4 +1,4 @@
-import { Button, Tab, Tabs, styled } from '@mui/material';
+import { Button, Pagination, Tab, Tabs, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -12,7 +12,8 @@ import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import { useNavigate, useNavigation } from 'react-router-dom';
 import { books } from '../../../services/UserServices';
-
+import { useDispatch } from 'react-redux';
+import { setProductId } from '../../../action/action';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -76,14 +77,17 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 );
 
 const TabContent = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [value, setValue] = useState('PHỔ BIẾN');
     const [products, setProduct] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
     const handleDetail = (index) => {
+        dispatch(setProductId(index));
         console.log(index);
         navigate('/user/detail');
     }
@@ -94,94 +98,12 @@ const TabContent = () => {
             .then(response => {
                 console.log(response.data);
                 setProduct(response.data.content);
-                // setUserLenght(response.data.totalElements);
+                setTotalPages(response.data.totalPages);
             })
             .catch(error => {
                 console.log(error);
             });
     })
-    // const products = [
-    //     {
-    //         id: 1,
-    //         image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    //         name: 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs',
-    //         price: '1000.000đ',
-    //         originalPrice: '2000.000đ',
-    //         discountPercent: 50,
-    //         rating: 4,
-    //         sales: '1.4k',
-    //     },
-    //     {
-    //         id: 2,
-    //         image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    //         name: 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs',
-    //         price: '1000.000đ',
-    //         originalPrice: '2000.000đ',
-    //         discountPercent: 50,
-    //         rating: 4,
-    //         sales: '1.5k',
-    //     },
-    //     {
-    //         id: 3,
-    //         image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    //         name: 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs',
-    //         price: '1000.000đ',
-    //         originalPrice: '2000.000đ',
-    //         discountPercent: 50,
-    //         rating: 4,
-    //         sales: '1.6k',
-    //     },
-    //     {
-    //         id: 4,
-    //         image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    //         name: 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs',
-    //         price: '1000.000đ',
-    //         originalPrice: '2000.000đ',
-    //         discountPercent: 50,
-    //         rating: 4,
-    //         sales: '1.7k',
-    //     },
-    //     {
-    //         id: 5,
-    //         image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    //         name: 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs',
-    //         price: '1000.000đ',
-    //         originalPrice: '2000.000đ',
-    //         discountPercent: 50,
-    //         rating: 4,
-    //         sales: '1.8k',
-    //     },
-    //     {
-    //         id: 6,
-    //         image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    //         name: 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs',
-    //         price: '1000.000đ',
-    //         originalPrice: '2000.000đ',
-    //         discountPercent: 50,
-    //         rating: 4,
-    //         sales: '1.9k',
-    //     },
-    //     {
-    //         id: 7,
-    //         image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    //         name: 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs',
-    //         price: '1000.000đ',
-    //         originalPrice: '2000.000đ',
-    //         discountPercent: 50,
-    //         rating: 4,
-    //         sales: '1.2k',
-    //     },
-    //     {
-    //         id: 8,
-    //         image: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
-    //         name: 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs',
-    //         price: '1000.000đ',
-    //         originalPrice: '2000.000đ',
-    //         discountPercent: 50,
-    //         rating: 4,
-    //         sales: '1.21k',
-    //     },
-    // ]
     const image = 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg';
     const name = 'Tắc kè hoa siêu đẹp chai ha ha ha ah vv vvv vvv vv vvv vvvv vvv vvv ah aha ha hs';
     const price = '1000.000đ';
@@ -221,6 +143,7 @@ const TabContent = () => {
                 </div>
             </StyledTabs>
             <Box>
+                {/* <Button onClick={() => { handleDetail(5) }}> test </Button> */}
                 <Grid container spacing={1}>
 
                     {
@@ -246,6 +169,26 @@ const TabContent = () => {
                         ))
                     }
                 </Grid>
+                <div className='pagination'>
+                    <Pagination sx={{
+                        margin: '0 auto',
+                        '& .MuiPaginationItem-root': {
+                            color: '#6868AC', // Màu chữ mặc định
+                            borderColor: '#6868AC', // Màu viền
+                        },
+                        '& .Mui-selected': {
+                            backgroundColor: '#6868AC !important', // Màu nền khi được chọn
+                            color: '#ffffff', // Màu chữ khi được chọn
+                        },
+                        '& .MuiPaginationItem-root:hover': {
+                            backgroundColor: '#E3CDFF', // Màu nền khi hover
+                            color: '#ffffff', // Màu chữ khi hover
+                        },
+                        '& .MuiPaginationItem-ellipsis': {
+                            color: '#6868AC', // Màu cho dấu ba chấm
+                        },
+                    }} count={totalPages} shape="rounded" />
+                </div>
             </Box>
         </Box >
     );

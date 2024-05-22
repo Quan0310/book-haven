@@ -1,4 +1,5 @@
-import { INCREMENT, DECREMENT } from './types';
+import { type } from '@testing-library/user-event/dist/type';
+import { INCREMENT, DECREMENT, PRODUCTID } from './types';
 
 
 export const increaseCounter = () => {
@@ -20,3 +21,8 @@ export const decreaseCounter = () => {
     };
 
 };
+
+export const setProductId = (id) => ({
+    type: PRODUCTID,
+    payload: id,
+});

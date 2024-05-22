@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import './ProductDetail.css';
@@ -7,8 +7,24 @@ import StarIcon from '@mui/icons-material/Star';
 import { ArrowBackIos, CheckCircle, CheckCircleRounded, KeyboardArrowDown, KeyboardArrowDownOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import Review from './Review/Review';
+import { useSelector } from 'react-redux';
+import { bookById } from '../../services/UserServices';
 const ProductDetail = () => {
+    const selectedProductId = useSelector((state) => state.productId);
+    const [product, setProduct] = useState({});
     const [selected, setSelected] = useState(1);
+
+    useEffect(() => {
+        bookById(selectedProductId)
+            .then(response => {
+                // console.log(response.data);
+                setProduct(response.data);
+                // setTotalPages(response.data.totalPages);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    })
     const images = [
         {
             original: 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
@@ -112,7 +128,7 @@ const ProductDetail = () => {
                             <div >
                                 <p style={{ fontSize: '14px', display: 'flex', color: '#6868AC', backgroundColor: 'pink', width: '120px', justifyContent: 'center', borderRadius: '15px' }}>
                                     <CheckCircleRounded sx={{ margin: ' auto 0', color: '#6868AC', fontSize: '16px' }} /> CHÍNH HÃNG</p>
-                                <h5>Sách - Một thoáng ta rực rỡ ở nhân gian (On earth we're briefly gorgeous - Ocean Vuong) </h5>
+                                <h5>{product.name} </h5>
                             </div>
                             <div>
                                 <span style={{ width: '100px' }}>
@@ -137,12 +153,12 @@ const ProductDetail = () => {
                             <div className='price-container'>
                                 {/* {discountPercent && <span style={{ textDecoration: 'line-through', marginLeft: '5px', color: '#ccc' }}>{originalPrice}</span>} */}
                                 <div style={{ textDecoration: 'line-through', position: 'relative', marginLeft: '5px', marginTop: '7px', color: '#686868', fontSize: '18px' }}>
-                                    135.000
+                                    {product.price}
                                     <span style={{ position: 'absolute', top: '-2px', left: '-7px', fontSize: '0.7em' }}>đ</span>
                                 </div>
 
                                 <div style={{ position: 'relative', margin: ' 0 40px', fontSize: '35px', color: '#6868AC' }}>
-                                    103.950
+                                    {product.specialPrice}
                                     <span style={{ position: 'absolute', left: '-7px', fontSize: '0.7em' }}>đ</span>
                                 </div>
                                 <div style={{ display: 'flex', backgroundColor: '#6868AC', fontSize: '14px', fontWeight: '500', color: ' #fff', marginTop: '7px', height: '27px', alignItems: 'center', padding: '0 13px', borderRadius: '5px' }}>23% GIẢM</div>
@@ -284,7 +300,7 @@ const ProductDetail = () => {
                             borderColor: '#6868AC', // Màu viền
                         },
                         '& .Mui-selected': {
-                            backgroundColor: '#6868AC', // Màu nền khi được chọn
+                            backgroundColor: '#6868AC !important', // Màu nền khi được chọn
                             color: '#ffffff', // Màu chữ khi được chọn
                         },
                         '& .MuiPaginationItem-root:hover': {
@@ -294,7 +310,7 @@ const ProductDetail = () => {
                         '& .MuiPaginationItem-ellipsis': {
                             color: '#6868AC', // Màu cho dấu ba chấm
                         },
-                    }} count={10} shape="rounded" />
+                    }} count={15} shape="rounded" />
                 </div>
             </div>
 
