@@ -31,6 +31,7 @@ import ChangePassword from "./components/profile/ProfileContent/ProfileContentIt
 import ProductDetail from "./components/detail/ProductDetail";
 import Cart from "./components/cart/Cart";
 import CheckOut from "./components/checkout/CheckOut";
+import API_log from "./log";
 
 function App(props) {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function App(props) {
     <div className="App" >
 
       <Routes>
+        <Route exact path="/" element={<API_log />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/user" element={<AppBody />} >
           <Route exact path="" element={<Home />} />

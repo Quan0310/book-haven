@@ -95,14 +95,8 @@ export default function PrimarySearchAppBar() {
         navigate('/user/profile');
     }
     const handleLogOut = async () => {
-        try {
-            const response = await axios.post('http://localhost:8765/api/auth/signout', {}, { withCredentials: true });
-            if (response.status === 200 && response.data.message === "You've been signed out!") {
-                navigate('/login'); // Điều hướng sang trang login
-            }
-        } catch (error) {
-            console.error('Đã xảy ra lỗi khi đăng xuất:', error);
-        }
+        localStorage.removeItem('jwtToken');
+        navigate('/login')
     };
     const menuId = 'primary-search-account-menu';
     const renderMenu = (

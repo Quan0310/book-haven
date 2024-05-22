@@ -38,4 +38,13 @@ const loginApi = (email, password) => {
         "password": password
     });
 }
-export { fetchAllUser, postCreateUser, getUserById, updateUserById, deleteUser, loginApi, isAdmin };
+
+const isUser = (token) => {
+    return axios.get(`/api/public`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+}
+
+export { fetchAllUser, postCreateUser, getUserById, updateUserById, deleteUser, loginApi, isAdmin, isUser };
