@@ -14,6 +14,7 @@ import { useNavigate, useNavigation } from 'react-router-dom';
 import { books } from '../../../services/UserServices';
 import { useDispatch } from 'react-redux';
 import { setProductId } from '../../../action/action';
+import { connect } from "react-redux"
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -76,7 +77,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
     }),
 );
 
-const TabContent = () => {
+const TabContent = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [value, setValue] = useState('PHỔ BIẾN');
@@ -87,7 +88,7 @@ const TabContent = () => {
     };
 
     const handleDetail = (index) => {
-        dispatch(setProductId(index));
+        props.setProductId(index);
         console.log(index);
         navigate('/user/detail');
     }
@@ -149,7 +150,7 @@ const TabContent = () => {
                     {
                         products.map((item, index) => (
                             <Grid item xs={6} sm={4} md={3} lg={12 / 5} >
-                                <Item onClick={() => { handleDetail(item.id) }} className="item-container" sx={{ padding: '0', fontSize: '1em', textAlign: 'left' }}>
+                                <Item onClick={() => { handleDetail(item.bookId) }} className="item-container" sx={{ padding: '0', fontSize: '1em', textAlign: 'left' }}>
 
                                     <img src={item.image} alt={item.name} style={{ width: '100%', height: 'auto', aspectRatio: '1/1', objectFit: 'cover' }} />
                                     <Typography className='prodName' sx={{ margin: '18px 10px', fontSize: '14px', color: '#29282D', lineHeight: '18px' }}>{item.name}</Typography>
@@ -194,5 +195,18 @@ const TabContent = () => {
     );
 }
 
-export default TabContent;
+const mapStateToProps = (state) => {
+    return {
+        count: state.counter.count,
+        productId: state.counter.productId,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setProductId: (id) => dispatch(setProductId(id)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabContent);
 

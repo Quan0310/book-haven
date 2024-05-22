@@ -22,7 +22,13 @@ export const decreaseCounter = () => {
 
 };
 
-export const setProductId = (id) => ({
-    type: PRODUCTID,
-    payload: id,
-});
+export const setProductId = (id) => {
+
+    return {
+
+        type: PRODUCTID,
+        payload: id,
+
+    };
+
+};

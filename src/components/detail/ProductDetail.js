@@ -7,15 +7,17 @@ import StarIcon from '@mui/icons-material/Star';
 import { ArrowBackIos, CheckCircle, CheckCircleRounded, KeyboardArrowDown, KeyboardArrowDownOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import Review from './Review/Review';
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bookById } from '../../services/UserServices';
-const ProductDetail = () => {
-    const selectedProductId = useSelector((state) => state.productId);
+import { setProductId } from '../../action/action';
+const ProductDetail = (props) => {
     const [product, setProduct] = useState({});
     const [selected, setSelected] = useState(1);
 
     useEffect(() => {
-        bookById(selectedProductId)
+        console.log("quoanbnd", props.productId);
+
+        bookById(props.productId)
             .then(response => {
                 // console.log(response.data);
                 setProduct(response.data);
@@ -318,4 +320,17 @@ const ProductDetail = () => {
     );
 }
 
-export default ProductDetail;
+const mapStateToProps = (state) => {
+    return {
+        count: state.counter.count,
+        productId: state.counter.productId,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setProductId: (id) => dispatch(setProductId(id)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail)
