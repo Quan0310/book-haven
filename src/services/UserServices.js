@@ -46,5 +46,17 @@ const isUser = (token) => {
         }
     });
 }
-
-export { fetchAllUser, postCreateUser, getUserById, updateUserById, deleteUser, loginApi, isAdmin, isUser };
+const books = (token, pageNumber, pageSize) => {
+    return axios.get(`/api/books`, {
+        params: {
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            sortBy: 'name',
+            sortOrder: 'asc'
+        },
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+}
+export { fetchAllUser, postCreateUser, getUserById, updateUserById, deleteUser, loginApi, isAdmin, isUser, books };
