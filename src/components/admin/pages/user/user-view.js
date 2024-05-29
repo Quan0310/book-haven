@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -9,187 +9,17 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
-// import TableNoData from './table-no-data';
 import UserTableRow from './user-table-row';
 import UserTableHead from './user-table-head';
-// import TableEmptyRows from './table-empty-rows';
-// import UserTableToolbar from './user-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from './utils';
-import { Link } from 'react-router-dom';
+import { applyFilter, getComparator } from './utils';
 import AddUser from './action/add-user';
 import Edit from './action/edit-user';
 import Delete from './action/delete-user';
-import { useEffect } from 'react';
 import { fetchAllUser } from '../../../../services/UserServices';
 
-// ----------------------------------------------------------------------
-
-const users = [
-    {
-        "name": "John Doe",
-        "company": "ABC Company",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Jane Smith",
-        "company": "XYZ Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "": ""
-    },
-    {
-        "name": "David Johnson",
-        "company": "123 Enterprises",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Emily Brown",
-        "company": "DEF Inc.",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Michael Lee",
-        "company": "456 Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "": ""
-    },
-    {
-        "name": "Sarah Taylor",
-        "company": "GHI Ltd.",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "James Wilson",
-        "company": "789 Enterprises",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Emma Garcia",
-        "company": "JKL Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "": ""
-    },
-    {
-        "name": "William Martinez",
-        "company": "MNO Inc.",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Olivia Lopez",
-        "company": "QRS Ltd.",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "John Doe",
-        "company": "ABC Company",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Jane Smith",
-        "company": "XYZ Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "": ""
-    },
-    {
-        "name": "David Johnson",
-        "company": "123 Enterprises",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Emily Brown",
-        "company": "DEF Inc.",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Michael Lee",
-        "company": "456 Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "": ""
-    },
-    {
-        "name": "Sarah Taylor",
-        "company": "GHI Ltd.",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "James Wilson",
-        "company": "789 Enterprises",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Emma Garcia",
-        "company": "JKL Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "": ""
-    },
-    {
-        "name": "William Martinez",
-        "company": "MNO Inc.",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    },
-    {
-        "name": "Olivia Lopez",
-        "company": "QRS Ltd.",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "": ""
-    }
-];
 export default function UserPage() {
     const token = localStorage.getItem('jwtToken');
-    const [propName, setPropName] = useState();
+    const [propName, setPropName] = useState(null);
     const [show, setShow] = useState(false);
     const [editShow, setEditShow] = useState(false);
     const [deleteShow, setDeleteShow] = useState(false);
@@ -201,18 +31,17 @@ export default function UserPage() {
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [listUsers, setListUsers] = useState([]);
-    const [userlenght, setUserLenght] = useState(0);
+    const [userLength, setUserLength] = useState(0);
+
     const handleSort = (event, id) => {
         const isAsc = orderBy === id && order === 'asc';
-        if (id !== '') {
-            setOrder(isAsc ? 'desc' : 'asc');
-            setOrderBy(id);
-        }
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(id);
     };
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = users.map((n) => n.name);
+            const newSelecteds = listUsers.map((n) => n.name);
             setSelected(newSelecteds);
             return;
         }
@@ -251,73 +80,66 @@ export default function UserPage() {
         setFilterName(event.target.value);
     };
 
+    const handleAddUserShow = () => {
+        setShow(true);
+    };
+    const handleAddUserClose = () => {
+        setShow(false);
+    };
+    const handleEditUserShow = (event) => {
+        setPropName(event);
+        setEditShow(true);
+    };
+    const handleEditUserClose = () => {
+        setEditShow(false);
+    };
+    const handleDeleteUserShow = (userId) => {
+        setPropName(userId);
+        setDeleteShow(true);
+    };
+    const handleDeleteUserClose = () => {
+        setDeleteShow(false);
+    };
+
     const dataFiltered = applyFilter({
-        inputData: users,
+        inputData: listUsers,
         comparator: getComparator(order, orderBy),
         filterName,
     });
-    const hanldeAddUserShow = () => {
-        setShow(true);
-    }
-    const hanldeAddUserClose = () => {
-        setShow(false);
-    }
-    const hanldeEditUserShow = (event) => {
-        console.log(">>>w>>", event);
-        setPropName(event);
-        setEditShow(true);
-    }
-    const hanldeEditUserClose = () => {
-        setEditShow(false);
-    }
-    const handleDeleteUserShow = (event) => {
-        console.log("propname: ", event)
-        setPropName(event);
-        setDeleteShow(true);
-    }
-    const handleDeleteUserClose = () => {
-        setDeleteShow(false);
-    }
+
     const notFound = !dataFiltered.length && !!filterName;
 
-    useEffect(() => {
+    const fetchUsers = () => {
         fetchAllUser(token, page, rowsPerPage)
             .then(response => {
-                console.log(response.data);
                 setListUsers(response.data.content);
-                setUserLenght(response.data.totalElements);
+                setUserLength(response.data.totalElements);
             })
             .catch(error => {
                 console.log(error);
             });
+    };
+
+    useEffect(() => {
+        fetchUsers();
     }, [page, rowsPerPage]);
+
     return (
         <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                 <Typography variant="h4">Users</Typography>
-
-                <Button
-                    onClick={hanldeAddUserShow}
-                    variant="contained" color="inherit"
-                >
+                <Button onClick={handleAddUserShow} variant="contained" color="inherit">
                     New User
                 </Button>
             </Stack>
 
             <Card>
-                {/* <UserTableToolbar
-                    numSelected={selected.length}
-                    filterName={filterName}
-                    onFilterName={handleFilterByName}
-                /> */}
-
-                {/* <Scrollbar> */}
                 <TableContainer sx={{ overflow: 'unset' }}>
                     <Table sx={{ minWidth: 800 }}>
                         <UserTableHead
                             order={order}
                             orderBy={orderBy}
-                            rowCount={users.length}
+                            rowCount={listUsers.length}
                             numSelected={selected.length}
                             onRequestSort={handleSort}
                             onSelectAllClick={handleSelectAllClick}
@@ -330,50 +152,37 @@ export default function UserPage() {
                             ]}
                         />
                         <TableBody>
-                            {listUsers
-                                .map((row) => (
-                                    <UserTableRow
-                                        userId={row.userId}
-                                        firstName={row.firstName}
-                                        lastName={row.lastName}
-                                        mobileNumber={row.mobileNumber}
-                                        email={row.email}
-
-                                        // avatarUrl={row.avatarUrl}
-                                        // isVerified={row.isVerified}
-
-                                        selected={selected.indexOf(row.name) !== -1}
-                                        handleClick={(event) => handleClick(event, row.name)}
-                                        handleDelete={handleDeleteUserShow}
-                                        handleEdit={hanldeEditUserShow}
-
-                                    />
-                                ))}
-
-                            {/* <TableEmptyRows
-                                    height={77}
-                                    emptyRows={emptyRows(page, rowsPerPage, users.length)}
-                                /> */}
-
-                            {/* {notFound && <TableNoData query={filterName} />} */}
+                            {dataFiltered.map((row) => (
+                                <UserTableRow
+                                    key={row.userId}
+                                    userId={row.userId}
+                                    firstName={row.firstName}
+                                    lastName={row.lastName}
+                                    mobileNumber={row.mobileNumber}
+                                    email={row.email}
+                                    selected={selected.indexOf(row.name) !== -1}
+                                    handleClick={(event) => handleClick(event, row.name)}
+                                    handleDelete={handleDeleteUserShow}
+                                    handleEdit={handleEditUserShow}
+                                />
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {/* </Scrollbar> */}
 
                 <TablePagination
                     page={page}
                     component="div"
-                    count={userlenght}
+                    count={userLength}
                     rowsPerPage={rowsPerPage}
                     onPageChange={handleChangePage}
                     rowsPerPageOptions={[5, 10, 15]}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Card>
-            <AddUser show={show} handleClose={hanldeAddUserClose}></AddUser>
-            <Edit show={editShow} handleClose={hanldeEditUserClose} propName={propName} ></Edit>
-            <Delete show={deleteShow} handleClose={handleDeleteUserClose} propName={propName} ></Delete>
+            <AddUser show={show} handleClose={handleAddUserClose} />
+            <Edit show={editShow} handleClose={handleEditUserClose} propName={propName} />
+            <Delete show={deleteShow} handleClose={handleDeleteUserClose} propName={propName} onDeleteSuccess={fetchUsers} token={token} />
         </Container>
     );
 }

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -9,121 +9,32 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
-// import TableNoData from './table-no-data';
-// import TableEmptyRows from './table-empty-rows';
-// import UserTableToolbar from './user-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from '../user/utils';
 import { Link } from 'react-router-dom';
 import ProductTableHead from './product-table-head';
 import ProductTableRow from './product-table-row';
+import { emptyRows, applyFilter, getComparator } from '../user/utils';
 
-// ----------------------------------------------------------------------
-
-const users = [
-    {
-        "name": "John Doe",
-        "company": "ABC Company",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "test": "10",
-        "": ""
-    },
-    {
-        "name": "Jane Smith",
-        "company": "XYZ Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "test": "5",
-        "": ""
-    },
-    {
-        "name": "David Johnson",
-        "company": "123 Enterprises",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "test": "6",
-        "": ""
-    },
-    {
-        "name": "Emily Brown",
-        "company": "DEF Inc.",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "test": "4",
-        "": ""
-    },
-    {
-        "name": "Michael Lee",
-        "company": "456 Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "test": "7",
-        "": ""
-    },
-    {
-        "name": "Sarah Taylor",
-        "company": "GHI Ltd.",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "test": "6",
-        "": ""
-    },
-    {
-        "name": "James Wilson",
-        "company": "789 Enterprises",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "test": "2",
-        "": ""
-    },
-    {
-        "name": "Emma Garcia",
-        "company": "JKL Corporation",
-        "role": "Employee",
-        "isVerified": false,
-        "status": "Inactive",
-        "test": "1",
-        "": ""
-    },
-    {
-        "name": "William Martinez",
-        "company": "MNO Inc.",
-        "role": "Customer",
-        "isVerified": true,
-        "status": "Active",
-        "test": "13",
-        "": ""
-    },
-    {
-        "name": "Olivia Lopez",
-        "company": "QRS Ltd.",
-        "role": "Admin",
-        "isVerified": true,
-        "status": "Active",
-        "test": "15",
-        "": ""
-    }
-];
 export default function ProductsPage() {
     const [page, setPage] = useState(0);
-
     const [order, setOrder] = useState('asc');
-
     const [selected, setSelected] = useState([]);
-
     const [orderBy, setOrderBy] = useState('name');
-
     const [filterName, setFilterName] = useState('');
-
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:8088/api/books');
+                setProducts(response.data.content);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     const handleSort = (event, id) => {
         const isAsc = orderBy === id && order === 'asc';
@@ -135,7 +46,7 @@ export default function ProductsPage() {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = users.map((n) => n.name);
+            const newSelecteds = products.map((product) => product.name);
             setSelected(newSelecteds);
             return;
         }
@@ -175,7 +86,7 @@ export default function ProductsPage() {
     };
 
     const dataFiltered = applyFilter({
-        inputData: users,
+        inputData: products,
         comparator: getComparator(order, orderBy),
         filterName,
     });
@@ -186,30 +97,23 @@ export default function ProductsPage() {
         <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                 <Typography variant="h4">Products</Typography>
-
-                <Button
+                 <Button
                     component={Link}
-                    to={"/add-user"}
-                    variant="contained" color="inherit"
+                    to="/admin/addproduct"
+                    variant="contained"
+                    color="inherit"
                 >
                     New Product
                 </Button>
             </Stack>
 
             <Card>
-                {/* <UserTableToolbar
-                    numSelected={selected.length}
-                    filterName={filterName}
-                    onFilterName={handleFilterByName}
-                /> */}
-
-                {/* <Scrollbar> */}
                 <TableContainer sx={{ overflow: 'unset' }}>
                     <Table sx={{ minWidth: 800 }}>
                         <ProductTableHead
                             order={order}
                             orderBy={orderBy}
-                            rowCount={users.length}
+                            rowCount={products.length}
                             numSelected={selected.length}
                             onRequestSort={handleSort}
                             onSelectAllClick={handleSelectAllClick}
@@ -226,36 +130,28 @@ export default function ProductsPage() {
                         <TableBody>
                             {dataFiltered
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => (
+                                .map((product) => (
                                     <ProductTableRow
-                                        key={row.id}
-                                        name={row.name}
-                                        role={row.role}
-                                        status={row.status}
-                                        company={row.company}
-                                        avatarUrl={row.avatarUrl}
-                                        isVerified={row.isVerified}
-                                        testa={row.test}
-                                        selected={selected.indexOf(row.name) !== -1}
-                                        handleClick={(event) => handleClick(event, row.name)}
+                                        key={product.bookId}
+                                        name={product.name}
+                                        role={product.categoryID}
+                                        status={product.status}
+                                        company={product.publisherID}
+                                        avatarUrl={product.image}
+                                        isVerified={product.isVerified}
+                                        testa={product.quantity}
+                                        selected={selected.indexOf(product.name) !== -1}
+                                        handleClick={(event) => handleClick(event, product.name)}
                                     />
                                 ))}
-
-                            {/* <TableEmptyRows
-                                    height={77}
-                                    emptyRows={emptyRows(page, rowsPerPage, users.length)}
-                                /> */}
-
-                            {/* {notFound && <TableNoData query={filterName} />} */}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {/* </Scrollbar> */}
 
                 <TablePagination
                     page={page}
                     component="div"
-                    count={users.length}
+                    count={products.length}
                     rowsPerPage={rowsPerPage}
                     onPageChange={handleChangePage}
                     rowsPerPageOptions={[5, 10, 25]}

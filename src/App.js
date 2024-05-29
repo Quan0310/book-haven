@@ -17,6 +17,9 @@ import AdminDashboard from "./components/admin/admindashboard";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import UserPage from "./components/admin/pages/user/user-view";
 import ProductsPage from "./components/admin/pages/products/products-view";
+import AddProductPage from "./components/admin/pages/products/add-product";
+
+
 import { useEffect } from "react";
 import axios from 'axios';
 import Home from "./components/home/Home";
@@ -61,6 +64,7 @@ function App(props) {
           <Route exact path="" element={<div>quan</div>} />
           <Route path="listuser" element={<UserPage />} />
           <Route exact path="listproduct" element={<ProductsPage />} />
+          <Route exact path="addproduct" element={<AddProductPage/>}/>
         </Route>
       </Routes>
 

@@ -1,40 +1,25 @@
-import { forwardRef, useState } from 'react';
-import PropTypes from 'prop-types';
-
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import Popover from '@mui/material/Popover';
+import { useState } from 'react';
+import axios from 'axios';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
-import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Popover from '@mui/material/Popover';
+import MenuItem from '@mui/material/MenuItem';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Checkbox from '@mui/material/Checkbox';
 import { Box } from '@mui/material';
 import { Icon } from '@iconify/react';
 
-import Label from '../user/label/label';
-// import Iconify from 'src/components/iconify';
-
-// ----------------------------------------------------------------------
-
-const Iconify = forwardRef(({ icon, width = 20, sx, ...other }, ref) => (
+const Iconify = ({ icon, width = 20, sx, ...other }) => (
     <Box
-        ref={ref}
         component={Icon}
-        className="component-iconify"
         icon={icon}
         sx={{ width, height: width, ...sx }}
         {...other}
     />
-));
-
-Iconify.propTypes = {
-    icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-    sx: PropTypes.object,
-    width: PropTypes.number,
-};
-
+);
 
 export default function ProductTableRow({
     selected,
@@ -45,7 +30,9 @@ export default function ProductTableRow({
     isVerified,
     status,
     handleClick,
-    testa
+    testa,
+    bookId,
+    handleDeleteBook
 }) {
     const [open, setOpen] = useState(null);
 
@@ -74,21 +61,14 @@ export default function ProductTableRow({
                 </TableCell>
 
                 <TableCell>{company}</TableCell>
-
                 <TableCell>{role}</TableCell>
-
                 <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
-
-                <TableCell>
-                    <Label color={(status === 'Inactive' && 'error') || 'success'}>{status}</Label>
-                    {/* {status} */}
-                </TableCell>
+                <TableCell>{status}</TableCell>
                 <TableCell>{testa}</TableCell>
 
                 <TableCell align="right">
                     <IconButton onClick={handleOpenMenu}>
                         <Iconify icon="eva:more-vertical-fill" />
-                        {/* <Box> <Icon style={{ width: 20, height: 20 }} icon="eva:more-vertical-fill"></Icon></Box> */}
                     </IconButton>
                 </TableCell>
             </TableRow>
@@ -103,15 +83,7 @@ export default function ProductTableRow({
                     sx: { width: 140 },
                 }}
             >
-                <MenuItem onClick={handleCloseMenu}>
-                    <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
-                    {/* <Box sx={{ mr: 2 }} >
-                        <Icon icon="eva:edit-fill" ></Icon>
-                    </Box> */}
-                    Edit
-                </MenuItem>
-
-                <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+                <MenuItem onClick={() => handleDeleteBook(bookId)}>
                     <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
                     Delete
                 </MenuItem>
@@ -119,14 +91,3 @@ export default function ProductTableRow({
         </>
     );
 }
-
-ProductTableRow.propTypes = {
-    avatarUrl: PropTypes.any,
-    company: PropTypes.any,
-    handleClick: PropTypes.func,
-    isVerified: PropTypes.any,
-    name: PropTypes.any,
-    role: PropTypes.any,
-    selected: PropTypes.any,
-    status: PropTypes.string,
-};
